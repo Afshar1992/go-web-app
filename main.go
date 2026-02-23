@@ -25,8 +25,16 @@ func contactPage(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "static/contact.html")
 }
 
-func main() {
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+	// Serve the home page when the root path is requested
+	http.ServeFile(w, r, "static/home.html")
+}
 
+func main() {
+	// Handle root path first
+	http.HandleFunc("/", rootHandler)
+
+	// Then handle specific paths
 	http.HandleFunc("/home", homePage)
 	http.HandleFunc("/courses", coursePage)
 	http.HandleFunc("/about", aboutPage)
